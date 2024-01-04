@@ -4,11 +4,9 @@
 
 As a security analyst, I’ll need to analyze network traffic to learn what type of traffic is being sent to and from systems on the networks I’ll be working with.
 
-Previously, I learned about packet capture and analysis. Analyzing packets can help security teams interpret and understand network communications. Network protocol analyzers such as Wireshark, which has a graphical user interface or GUI, can help me examine packet data during my investigations. Since network packet data is complex, network protocol analyzers (packet sniffers) like Wireshark are designed to help me find patterns and filter the data in order to focus on the network traffic that is most relevant to my security investigations.
+Previously, I learned about packet capture and analysis. Analyzing packets can help security teams interpret and understand network communications. Network protocol analyzers such as Wireshark, which has a graphical user interface or GUI, can help me examine packet data during my investigations. Since network packet data is complex, network protocol analyzers (packet sniffers) like Wireshark are designed to help me find patterns and filter the data to focus on the network traffic that is most relevant to my security investigations.
 
 Now I’ll use Wireshark to inspect packet data and apply filters to sort through packet information efficiently.
-
-In this lab activity, I’ll use Wireshark to examine a sample packet capture file and filter the network traffic data.
 
 <h2>Scenario</h2>
 
@@ -22,7 +20,7 @@ I must filter the data to:
 
 - examine the protocols that are used when the user makes the connection to the website, and
 
-- analyze some of the data packets to identify the type of information sent and received by the systems that connect to each other when the network data is captured.
+- analyze some of the data packets to identify the type of information sent and received by the systems that connect when the network data is captured.
 
 Here’s how I’ll do this: First, I’ll open the packet capture file and explore the basic Wireshark graphic user interface. Second, I’ll open a detailed view of a single packet and explore how to examine the various protocol and data layers inside a network packet. Third, I’ll apply filters to select and inspect packets based on specific criteria. Fourth, I’ll filter and inspect UDP DNS traffic to examine protocol data. Finally, I’ll apply filters to TCP packet data to search for specific payload text data.
 
@@ -54,9 +52,10 @@ Not all the data packets are the same color. Coloring rules are used to provide 
 
 3. Scroll down the packet list until a packet is listed where the info column starts with the words 'Echo (ping) request'.
 
-Here we can see, [], is the protocol of the first packet in the list where the info column starts with the words ‘Echo (ping) request’:
+Here we can see, ICMP, is the protocol of the first packet in the list where the info column starts with the words ‘Echo (ping) request’:
 
-[]
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/961eacbc-3c01-4cbd-92e8-58c82d263aab)
+
 <h2>Task 2. Apply a basic Wireshark filter and inspect a packet</h2>
 
 In this task, I’ll open a packet in Wireshark for more detailed exploration and filter the data to inspect the network layers and protocols contained in the packet.
@@ -83,9 +82,13 @@ Note: The details pane is located at the bottom portion of the main Wireshark wi
 
 This provides me with details about the overall network packet, or frame, including the frame length and the arrival time of the packet. At this level, I’m viewing information about the entire packet of data.
 
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/25d1d636-abb0-445e-8ee3-47e8dec0d6b1)
+
 5. Double-click Frame again to collapse the subtree and then double-click the Ethernet II subtree.
 
 This item contains details about the packet at the Ethernet level, including the source and destination MAC addresses and the type of internal protocol that the Ethernet packet contains.
+
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/245b49d9-f3c8-49c0-ac80-7e23b5837220)
 
 6. Double-click Ethernet II again to collapse that subtree and then double-click the Internet Protocol Version 4 subtree.
 
@@ -95,19 +98,23 @@ Note: The Internet Protocol Version 4 subtree is Internet Protocol Version 4 (IP
 
 The source and destination IP addresses shown here match the source and destination IP addresses in the summary display for this packet in the main Wireshark window.
 
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/e438b1ea-c2f7-43a4-9380-35f5ef715022)
+
 7. Double-click Internet Protocol Version 4 again to collapse that subtree and then double-click the Transmission Control Protocol subtree.
 
 This provides detailed information about the TCP packet, including the source and destination TCP ports, the TCP sequence numbers, and the TCP flags.
 
 The source port and destination port listed here match the source and destination ports in the info column of the summary display for this packet in the list of all of the packets in the main Wireshark window.
 
-Here we see [] is the TCP destination port of this TCP packet:
+Here we see port 80 is the TCP destination port of this TCP packet:
 
-[]
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/165bfd02-5703-4f99-8c2d-dbc3254a637f)
 
 8. In the Transmission Control Protocol subtree, scroll down and double-click Flags.
 
 This provides a detailed view of the TCP flags set in this packet.
+
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/81ca95dd-4f75-47c1-ad74-518fa376e5c7)
 
 9. Click the X icon to close the detailed packet inspection window.
 
@@ -121,7 +128,7 @@ If I ever accidentally close the Wireshark application, I can reopen it by doubl
 
 <h2>Task 3. Use filters to select packets</h2>
 
-In this task, I’ll use filters to analyze specific network packets based on where the packets came from or where they were sent to. I’ll explore how to select packets using either their physical Ethernet Media Access Control (MAC) address or their Internet Protocol (IP) address.
+In this task, I’ll use filters to analyze specific network packets based on where the packets came from or where they were sent. I’ll explore how to select packets using either their physical Ethernet Media Access Control (MAC) address or their Internet Protocol (IP) address.
 
 1. Enter the following filter to select traffic for a specific source IP address only. Enter this into the Apply a display filter... text box immediately above the list of packets:
 
@@ -130,6 +137,8 @@ In this task, I’ll use filters to analyze specific network packets based on wh
 2. Press ENTER or click the Apply display filter icon in the filter text box.
 
 A filtered list is returned with fewer entries than before. It contains only packets that came from 142.250.1.139.
+
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/2498226d-bbbb-47a9-95ac-b7e7737c9606)
 
 3. Click the X Clear display filter icon in the Wireshark filter bar to clear the IP address filter.
 
@@ -140,6 +149,8 @@ A filtered list is returned with fewer entries than before. It contains only pac
 5. Press ENTER or click the Apply display filter icon in the filter text box.
 
 A filtered list is returned that contains only packets that were sent to 142.250.1.139.
+
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/3f3af57f-3eeb-4c15-b359-b89708669410)
 
 6. Click the X Clear display filter icon in the Wireshark filter bar to clear the IP address filter.
 
@@ -155,15 +166,17 @@ A filtered list is returned that contains only packets that were sent to 142.250
 
 The MAC address I specified in the filter is listed as either the source or destination address in the expanded Ethernet II subtree.
 
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/46e91e97-8234-47ec-b4a3-3f2b8a0df37d)
+
 11. Double-click the Ethernet II subtree to close it.
 
 12. Double-click the Internet Protocol Version 4 subtree to expand it and scroll down until the Time to Live and Protocol fields appear.
 
 The Protocol field in the Internet Protocol Version 4 subtree indicates which IP internal protocol is contained in the packet.
 
-Here we see, [], is the protocol contained in the IPv4 subtree from the first packet related to MAC address 42:01:ac:15:e0:02:
+Here we see, TCP, is the protocol contained in the IPv4 subtree from the first packet related to MAC address 42:01:ac:15:e0:02:
 
-[]
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/50382142-b67e-46f7-ae46-2d89d2581a63)
 
 13. Click the X icon to close the detailed packet inspection window.
 
@@ -187,6 +200,8 @@ In this task, I’ll use filters to select and examine DNS traffic. Once I‘ve 
 
 I’ll notice that the name of the website that was queried is opensource.google.com.
 
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/4d55e072-de1f-41d7-98f5-4657fdd5799a)
+
 6. Click the X icon to close the detailed packet inspection window.
 
 7. Double-click the fourth packet in the list to open the detailed packet window.
@@ -197,9 +212,9 @@ I’ll notice that the name of the website that was queried is opensource.google
 
 The Answers data includes the name that was queried (opensource.google.com) and the addresses that are associated with that name.
 
-Here I see the IP address, [], is displayed in the expanded Answers section for the DNS query for opensource.google.com:
+Here I see the IP address, 142.250.1.139, is displayed in the expanded Answers section for the DNS query for opensource.google.com:
 
-[]
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/ee1d3d01-03a2-4f2c-af10-5f57f8a85a87)
 
 10. Click the X icon to close the detailed packet inspection window.
 
@@ -207,7 +222,7 @@ Here I see the IP address, [], is displayed in the expanded Answers section for 
 
 <h2>Task 5. Use filters to explore TCP packets</h2>
 
-In this task, I’ll use additional filters to select and examine TCP packets. I’ll learn how to search for text that is present in payload data contained inside network packets. This will locate packets based on something such as a name or some other text that is of interest to I.
+In this task, I’ll use additional filters to select and examine TCP packets. I’ll learn how to search for text that is present in payload data contained inside network packets. This will locate packets based on something such as a name or some other text that is of interest to me.
 
 1. Enter the following filter to select TCP port 80 traffic. TCP port 80 is the default port that is associated with web traffic:
 
@@ -219,21 +234,21 @@ Quite a few packets were created when the user accessed the web page http://open
 
 3. Double-click the first packet in the list. The Destination IP address of this packet is 169.254.169.254.
 
-Here we see the Time to Live value, [], of the packet as specified in the IPv4 subtree:
+Here we see the Time to Live value, 64, of the packet as specified in the IPv4 subtree:
 
-[]
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/edf66a36-b5bb-4439-9dc0-feb09fae5d94)
 
-Here we see, [], is the Frame Length:
+Here we see, 54 bytes, is the Frame Length specified in the Frame subtree:
 
-[]
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/40ef2dd4-6da7-4e2c-a22d-6212c811ed2c)
 
-Here we see, [], is the Header Length:
+Here we see, 20 bytes, is the Header Length under the IPv4 subtree:
 
-[]
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/cb6361f2-182a-4e03-8a95-d47145c92019)
 
-Here we see, [], is the Destination Address:
+Here we see, 169.254.169.254, is the Destination Address under the IPv4 subtree:
 
-[]
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/d2fb45ed-c1da-4c0a-9415-d1b4201167e6)
 
 4. Click the X icon to close the detailed packet inspection window.
 
@@ -246,6 +261,8 @@ Here we see, [], is the Destination Address:
 7. Press ENTER or click the Apply display filter icon in the filter text box.
 
 This filters packets containing web requests made with the ```curl``` command in this sample packet capture file.
+
+![image](https://github.com/n8som/Analyzing-My-First-Packet-With-Wireshark/assets/110139109/6550e5c0-895b-4064-b0d9-dd68fdadd486)
 
 <h2>Conclusion</h2>
 
